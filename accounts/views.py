@@ -50,7 +50,7 @@ class Signin(View):
                     response.set_cookie('access_token', access_token, max_age=999999999, httponly=True)
             return response
         else:
-            return render(request, 'signin.html', { 'error': 'Failed To Sign-In!' })
+            return render(request, 'signin.html', { 'error': '로그인 실패!' })
 
 # 회원가입
 class Signup(View):
@@ -64,11 +64,11 @@ class Signup(View):
         if password == password_confirm:
             try:
                 user = User.objects.get(username=username)
-                return render(request, 'signup.html', { 'error': 'Duplicated Username Existed!' })
+                return render(request, 'signup.html', { 'error': '중복된 계정명 존재!' })
             except User.DoesNotExist:
                 user = User.objects.create_user(username=username, password=password)
                 auth.login(request, user)
-                return redirect('index')
+                return render(request, 'index.html', { 'alert': '회원가입 성공!' })
 
 class Signout(View):
     def get(self, request, *args, **kwargs):

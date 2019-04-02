@@ -2,7 +2,10 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div class="alert alert-primary text-center" role="alert">
-    Signed In!<br>
+    {% if alert is not None %}
+    {{ alert }}
+    {% endif %}
+    로그인 성공!<br>
     {{ request.user }}
 </div>
 {% endif %}
