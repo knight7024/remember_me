@@ -20,6 +20,7 @@ class AutoLoginMiddleware:
         if not request.user.is_authenticated:
             # 쿠키에서 ACCESS TOKEN을 불러옴
             access_token = request.COOKIES.get('access_token', None)
+            is_deleted_user = False
             if access_token:
                 try: # ACCESS TOKEN이
                     manage_token = Generate_Token()
@@ -40,14 +41,23 @@ class AutoLoginMiddleware:
                     decoded_payload = manage_token.decode_token(access_token)
                     username = decoded_payload['username'] # 최종 유저네임 가져와서
 
-                    user = User.objects.get(username=username)
-                    user.backend = 'django.contrib.auth.backends.ModelBackend'
-                    # 로그인
-                    if user is not None:
-                        request.user = user
-                        auth.login(request, user)
+                    try:
+                        user = User.objects.get(username=username)
+
+                    except User.DoesNotExist:
+                        is_deleted_user = True
+
+                    else:
+                        user.backend = 'django.contrib.auth.backends.ModelBackend'
+                        # 로그인
+                        if user is not None:
+                            request.user = user
+                            auth.login(request, user)
                 
         response = self.get_response(request)
+
+        if is_deleted_user:
+            response.delete_cookie('access_token')
 
         # Code to be executed for each request/response after
         # the view is called.
