@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
-import os #, json
+import os, json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR의 경로는 프로젝트 폴더
@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ### GITHUB 배포용 ###
 
 # ROOT_DIR의 경로는 프로젝트 폴더의 상위 폴더
-# ROOT_DIR = os.path.dirname(BASE_DIR)
+ROOT_DIR = os.path.dirname(BASE_DIR)
 
 CONFIG_SECRET_DIR = os.path.join(ROOT_DIR, '.config_secret')
 CONFIG_SECRET_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'settings_common.json')
@@ -36,6 +36,7 @@ SECRET_KEY = config_secret_common['DJANGO']['SECRET_KEY']
 # SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '9*07y9f!@7zu@2a2*i*mf_qe=hz!yd_fhj*(-4^cd-65n(1m36')
 
 # HS256_SECRET_KEY = os.environ.get('REMEMBER_ME_SECRET_KEY', 'nKA7Tthu%?eFSB*VZctfgFsTQkz!8s')
+HS256_SECRET_KEY = config_secret_common['REMEMBER_ME']['SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
