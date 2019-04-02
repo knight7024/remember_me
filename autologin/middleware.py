@@ -16,11 +16,11 @@ class AutoLoginMiddleware:
         # Code to be executed for each request before
         # the view (and later middleware) are called.
 
+        is_deleted_user = False
         # 로그인된 상태가 아니라면
         if not request.user.is_authenticated:
             # 쿠키에서 ACCESS TOKEN을 불러옴
             access_token = request.COOKIES.get('access_token', None)
-            is_deleted_user = False
             if access_token:
                 try: # ACCESS TOKEN이
                     manage_token = Generate_Token()
