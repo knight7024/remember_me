@@ -14,8 +14,9 @@ class Generate_Token: # 토큰 생성
         'typ': 'JWT',
     }
     # HS256 비밀키
-    # config_secret_common = json.loads(open(settings.CONFIG_SECRET_COMMON_FILE).read())
-    secret = settings.HS256_SECRET_KEY # config_secret_common['REMEMBER_ME']['SECRET']
+    config_secret_common = json.loads(open(settings.CONFIG_SECRET_COMMON_FILE).read())
+    # secret = settings.HS256_SECRET_KEY 
+    secret = settings.config_secret_common['REMEMBER_ME']['SECRET']
 
     def refresh_token(self, username): # GENERATE REFRESH TOKEN
         # JWT - payload
@@ -61,7 +62,6 @@ class Generate_Token: # 토큰 생성
                 # print('****************** ACCESS TOKEN 발급 완료 ******************')
 
             else: # 있다면
-                print("passed")
                 try: # ACCESS TOKEN이
                     decoded_payload = self.decode_token(myAccessToken)
                 
