@@ -9,6 +9,11 @@
     {{ request.user }}
 </div>
 {% endif %}
+{% if alert is not None %}
+<div class="alert alert-primary text-center" role="alert">
+    {{ alert }}
+</div>
+{% endif %}
 <div class="button-group" style="text-align: center">
     <a role="button" class="btn btn-dark" href="{% url 'signin'%}">Sign In</a>
     <a role="button" class="btn btn-dark" href="{% url 'signup'%}">Sign Up</a>
