@@ -2,7 +2,8 @@
 {% block content %}
 {% if user.is_authenticated %}
 <div class="alert alert-primary text-center" role="alert">
-    Signed In!
+    Signed In!<br>
+    {{ request.user }}
 </div>
 {% endif %}
 <div class="button-group" style="text-align: center">
