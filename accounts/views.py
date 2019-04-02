@@ -67,8 +67,8 @@ class Signup(View):
                 return render(request, 'signup.html', { 'error': '중복된 계정명 존재!' })
             except User.DoesNotExist:
                 user = User.objects.create_user(username=username, password=password)
-                auth.login(request, user)
-                return render(request, 'index.html', { 'alert': '회원가입 성공!' })
+                # auth.login(request, user)
+                return render(request, 'index.html', { 'alert': '회원가입 성공! 다시 로그인해주세요.' })
 
 class Signout(View):
     def get(self, request, *args, **kwargs):
